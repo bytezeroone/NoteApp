@@ -90,12 +90,10 @@ fun NoteItem(
                     when (isClickable) {
                         true -> Icon(
                             imageVector = (
-                                    (if (isExpanded) {
-                                        Icons.Outlined.ExpandLess
-                                    } else if (!isExpanded && isClickable) {
-                                        Icons.Outlined.ExpandMore
-                                    } else Unit) as ImageVector
-                                    ),
+                                    when (!isExpanded) {
+                                        true -> Icons.Outlined.ExpandMore
+                                        false -> Icons.Outlined.ExpandLess
+                                    }),
                             contentDescription = "show more",
                             modifier = Modifier.align(Alignment.TopEnd)
                         )
