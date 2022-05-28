@@ -65,7 +65,7 @@ fun AddEditNoteScreen(
                 onValueChange = {
                     viewModel.onEvent(EditNoteEvent.OnDescriptionChange(it))
                 },
-                label = { Text(text = "Description")},
+                label = { Text(text = "Note")},
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = false,
                 maxLines = 12
