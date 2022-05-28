@@ -1,5 +1,6 @@
 package com.bytezeroone.noteapp.presentation.edit_note
 
+import android.icu.text.CaseMap
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -50,25 +51,21 @@ fun AddEditNoteScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            TextField(
+            OutlinedTextField(
                 value = viewModel.title,
                 onValueChange = {
                     viewModel.onEvent(EditNoteEvent.OnTitleChange(it))
                 },
-                placeholder = {
-                    Text(text = "Title")
-                },
+                label = { Text(text = "Title")},
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
-            TextField(
+            OutlinedTextField(
                 value = viewModel.description,
                 onValueChange = {
                     viewModel.onEvent(EditNoteEvent.OnDescriptionChange(it))
                 },
-                placeholder = {
-                    Text(text = "Description")
-                },
+                label = { Text(text = "Description")},
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = false,
                 maxLines = 12
