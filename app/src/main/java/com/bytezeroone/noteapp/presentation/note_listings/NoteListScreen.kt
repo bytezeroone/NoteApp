@@ -1,6 +1,5 @@
 package com.bytezeroone.noteapp.presentation.note_listings
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bytezeroone.noteapp.util.UiEvent
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun NoteListScreen(
@@ -26,7 +24,7 @@ fun NoteListScreen(
     val notes = viewModel.notes.collectAsState(initial = emptyList())
     val scaffoldState = rememberScaffoldState()
     LaunchedEffect(key1 = true) {
-        viewModel.uiEvent.collect() { event ->
+        viewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.ShowSnackBar -> {
                     val result = scaffoldState.snackbarHostState.showSnackbar(
@@ -64,10 +62,7 @@ fun NoteListScreen(
                     onEvent = viewModel::onEvent,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable {
-                            viewModel.onEvent(NoteListEvent.OnNoteClick(note))
-                        }
-                        .padding(16.dp)
+                        .padding(start = 8.dp, end = 8.dp, bottom = 8.dp, top = 0.dp)
                 )
             }
         }

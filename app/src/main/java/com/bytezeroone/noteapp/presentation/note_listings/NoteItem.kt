@@ -8,26 +8,25 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.outlined.ExpandCircleDown
-import androidx.compose.material.icons.outlined.ExpandLess
-import androidx.compose.material.icons.outlined.ExpandMore
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bytezeroone.noteapp.data.local.Note
 
 @Composable
 fun NoteItem(
     note: Note,
     onEvent: (NoteListEvent) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: NoteListViewModel = hiltViewModel()
 ) {
     var isExpanded by remember { mutableStateOf(false) }
     val textLayoutResultState = remember { mutableStateOf<TextLayoutResult?>(null) }
@@ -60,30 +59,36 @@ fun NoteItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(Modifier.fillMaxSize()) {
+                    IconButton(
+                        onClick = { viewModel.onEvent(NoteListEvent.OnNoteClick(note)) },
+                        modifier = Modifier.align(Alignment.CenterEnd),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Edit,
+                            contentDescription = "Edit"
+                        )
+                    }
                     Text(
                         text = note.title,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.align(Alignment.CenterStart)
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
+                            .padding(36.dp)
                     )
-                    //Spacer(modifier = Modifier.width(8.dp))
                     IconButton(
-                        onClick = {
-                            onEvent(NoteListEvent.OnDeleteNoteClick(note))
-                        },
-                        modifier = Modifier.align(Alignment.CenterEnd)
+                        onClick = { onEvent(NoteListEvent.OnDeleteNoteClick(note)) },
+                        modifier = Modifier.align(Alignment.CenterStart)
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Delete,
+                            imageVector = Icons.Outlined.Delete,
                             contentDescription = "Delete"
                         )
                     }
-
                 }
             }
-            Divider()
             finalText.let { it ->
-                Spacer(modifier = Modifier.height(8.dp))
+                //Spacer(modifier = Modifier.height(8.dp))
                 Box(
                     modifier = Modifier.fillMaxSize()
                 ) {
@@ -113,6 +118,7 @@ fun NoteItem(
 
                 }
             }
+            Divider()
         }
     }
 }

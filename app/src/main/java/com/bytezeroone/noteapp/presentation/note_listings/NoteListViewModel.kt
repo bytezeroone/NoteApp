@@ -46,7 +46,7 @@ class NoteListViewModel @Inject constructor(
                     deletedNote = event.note
                     repository.deleteNote(event.note)
                     sendUiEvent(UiEvent.ShowSnackBar(
-                        message = "Note deleted",
+                        message = "Note '${deletedNote!!.title}' was deleted",
                         action = "Undo"
                     ))
                 }
